@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI_FractionCalculator.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="10"
+            Padding="30,0"
+            Margin="2"
+            VerticalOptions="Center">
+            <Label Text="Калькулятор дробей" TextColor="Gray" FontSize="24"/>
+            <Frame CornerRadius="10" BorderColor="Gray">
+                <Grid Margin="2" ColumnDefinitions="*, Auto, *, Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="20" RowSpacing="20" VerticalOptions="Start">
+                    <VerticalStackLayout x:Name="fractionA" Spacing="10" HorizontalOptions="Fill" Grid.Column="0">
+                        <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                        <BoxView HeightRequest="2" Color="Gray"/>
+                        <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                    </VerticalStackLayout>
+                    <Picker x:Name="operatorPicker" 
+                            VerticalOptions="Center" 
+                            ItemsSource="{Binding Operations}" 
+                            SelectedItem="{Binding Operation, Mode=TwoWay}" 
+                            ItemDisplayBinding="{Binding Symbol}" 
+                            SelectedIndex="0" 
+                            Grid.Column="1"/>
+                    <VerticalStackLayout x:Name="fractionB" Spacing="10" HorizontalOptions="Fill" Grid.Column="2">
+                        <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                        <BoxView HeightRequest="2" Color="Gray"/>
+                        <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                    </VerticalStackLayout>
+                    <Image VerticalOptions="Center" Source="{FontImage '=', Color=Black}" Grid.Column="3"/>
+                    <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" Grid.Column="4">
+                        <Entry x:Name="resultNominatorEntry" IsReadOnly="True"/>
+                        <BoxView HeightRequest="2" Color="Gray"/>
+                        <Entry x:Name="resultDenominatorEntry" IsReadOnly="True"/>
+                    </VerticalStackLayout>
+                    <Button Text="Вычислить" Clicked="CalculateButtonClicked" Grid.Row="1" Grid.ColumnSpan="5" HorizontalOptions="Center"/>
+                </Grid>
+            </Frame> 
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
