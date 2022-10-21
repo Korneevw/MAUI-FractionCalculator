@@ -17,18 +17,18 @@ namespace MAUI_FractionCalculator
             int aNum = a.Numerator;
             int bNum = b.Numerator;
 
-            if (a.IsNegative == false)
+            if (a.IsNegative == true)
             {
                 aNum = -a.Numerator;
             }
-            if (b.IsNegative == false)
+            if (b.IsNegative == true)
             {
                 bNum = -b.Numerator;
             }
 
             bool isNegative = (aNum * b.Denominator + bNum * a.Denominator) < 0;
 
-            return new Fraction(Math.Abs(a.Numerator * b.Denominator - b.Numerator * a.Denominator), a.Denominator * b.Denominator) 
+            return new Fraction(Math.Abs(aNum * b.Denominator + bNum * a.Denominator), a.Denominator * b.Denominator) 
                        { IsNegative = isNegative };
         }
     }

@@ -28,7 +28,7 @@ public partial class MainPage : ContentPage
 			result = FractionSimplifier.Simplify(result);
 		resultNominatorEntry.Text = Math.Abs(result.Numerator).ToString();
 		resultDenominatorEntry.Text = Math.Abs(result.Denominator).ToString();
-		resultNegativeLabel.Text = result.IsNegative ? "+" : "-";
+		resultNegativeLabel.Text = result.IsNegative ? "-" : "+";
     }
 	private void SimplifyResultCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
 	{
@@ -37,11 +37,11 @@ public partial class MainPage : ContentPage
 
 	private void FractionANegativeCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
 	{
-		fractionANegativeLabel.Text = ((CheckBox)sender).IsChecked ? "+" : "-";
+		fractionANegativeLabel.Text = ((CheckBox)sender).IsChecked ? "-" : "+";
 	}
 
 	private void fractionBNegativeCB_CheckedChanged(object sender, CheckedChangedEventArgs e)
 	{
-        fractionBNegativeLabel.Text = ((CheckBox)sender).IsChecked ? "+" : "-";
+        fractionBNegativeLabel.Text = ((CheckBox)sender).IsChecked ? "-" : "+";
     }
 }

@@ -21,11 +21,11 @@ namespace MAUI_FractionCalculator
             int aNum = a.Numerator;
             int bNum = b.Numerator;
 
-            if (a.IsNegative == false)
+            if (a.IsNegative == true)
             {
                 aNum = -a.Numerator;
             }
-            if (b.IsNegative == false)
+            if (b.IsNegative == true)
             {
                 bNum = -b.Numerator;
             }

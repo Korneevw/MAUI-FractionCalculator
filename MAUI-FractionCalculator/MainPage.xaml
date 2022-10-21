@@ -16,9 +16,9 @@
             <Frame CornerRadius="10" BorderColor="Gray">
                 <VerticalStackLayout Margin="2" Spacing="20">
                     <Grid ColumnDefinitions="Auto, *, Auto, Auto, *, Auto, Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="20">
-                        
+
                         <Label x:Name="fractionANegativeLabel" 
-                               Text="{Binding IsPositive, Converter={StaticResource boolToSymbol}}" 
+                               Text="{Binding IsNegative, Converter={StaticResource boolToSymbol}}" 
                                VerticalOptions="Center"
                                FontSize="36"
                                Grid.Column="0"/>
@@ -27,13 +27,15 @@
                             <BoxView HeightRequest="2" Color="Gray"/>
                             <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
                         </VerticalStackLayout>
-                        <CheckBox x:Name="fractionANegativeCB"
+                        <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="1" Grid.Row="1" Spacing="5">
+                            <Label Text="Отрицательная?" VerticalOptions="Center"/>
+                            <CheckBox x:Name="fractionANegativeCB"
                                   IsChecked="{Binding IsNegative, Mode=TwoWay}" 
                                   CheckedChanged="FractionANegativeCheckboxCheckedChanged"
                                   Grid.Column="1"
-                                  Grid.Row="1"
-                                  HorizontalOptions="Center"/>
-                        
+                                  Grid.Row="1"/>
+                        </HorizontalStackLayout>
+
                         <Picker x:Name="operatorPicker"
                                 VerticalOptions="Center" 
                                 ItemsSource="{Binding Operations}" 
@@ -43,7 +45,7 @@
                                 Grid.Column="2"/>
                         
                         <Label x:Name="fractionBNegativeLabel" 
-                               Text="{Binding IsPositive, Converter={StaticResource boolToSymbol}}" 
+                               Text="{Binding IsNegative, Converter={StaticResource boolToSymbol}}" 
                                VerticalOptions="Center"
                                FontSize="36"
                                Grid.Column="3"/>
@@ -52,17 +54,19 @@
                             <BoxView HeightRequest="2" Color="Gray"/>
                             <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
                         </VerticalStackLayout>
-                        <CheckBox x:Name="fractionBNegativeCB"
+                        <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="4" Grid.Row="1" Spacing="5">
+                            <Label Text="Отрицательная?" VerticalOptions="Center"/>
+                            <CheckBox x:Name="fractionBNegativeCB"
                                   IsChecked="{Binding IsNegative, Mode=TwoWay}" 
                                   CheckedChanged="fractionBNegativeCB_CheckedChanged"
                                   Grid.Column="4"
-                                  Grid.Row="1"
-                                  HorizontalOptions="Center"/>
+                                  Grid.Row="1"/>
+                        </HorizontalStackLayout>
                         
                         <Label VerticalOptions="Center" Text="=" Grid.Column="5" FontSize="36"/>
 
                         <Label x:Name="resultNegativeLabel" 
-                               Text="{Binding IsPositive, Converter={StaticResource boolToSymbol}}" 
+                               Text="{Binding IsNegative, Converter={StaticResource boolToSymbol}}" 
                                VerticalOptions="Center"
                                FontSize="36"
                                Grid.Column="6"/>
