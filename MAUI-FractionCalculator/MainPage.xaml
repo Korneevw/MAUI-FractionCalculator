@@ -15,18 +15,37 @@
             <Label Text="Калькулятор дробей" TextColor="Gray" FontSize="24"/>
             <Frame CornerRadius="10" BorderColor="Gray">
                 <VerticalStackLayout Margin="2" Spacing="20">
-                    <Grid ColumnDefinitions="Auto, *, Auto, Auto, *, Auto, Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="20">
+                    <Grid ColumnDefinitions="Auto, *, Auto, Auto, *, Auto, Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="10" Padding="20">
 
                         <Label x:Name="fractionANegativeLabel" 
                                Text="{Binding IsNegative, Converter={StaticResource boolToSymbol}}" 
                                VerticalOptions="Center"
                                FontSize="36"
                                Grid.Column="0"/>
-                        <VerticalStackLayout x:Name="fractionA" Spacing="10" HorizontalOptions="Fill" Grid.Column="1">
-                            <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
-                            <BoxView HeightRequest="2" Color="Gray"/>
-                            <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
-                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="1*, 2*" ColumnSpacing="20" x:Name="fractionA" Grid.Column="1" >
+                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2" VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Entry Text="{Binding Whole, Mode=TwoWay}" VerticalOptions="Center" Grid.Column="0"/>
+                            </Border>
+                            <VerticalStackLayout Spacing="10" Grid.Column="1" HorizontalOptions="Fill">
+                                <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+                                    <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                                </Border>
+                                <BoxView HeightRequest="2" Color="Gray"/>
+                                <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+                                    <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
                         <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="1" Grid.Row="1" Spacing="5">
                             <Label Text="Отрицательная?" VerticalOptions="Center"/>
                             <CheckBox x:Name="fractionANegativeCB"
@@ -50,9 +69,19 @@
                                FontSize="36"
                                Grid.Column="3"/>
                         <VerticalStackLayout x:Name="fractionB" Spacing="10" HorizontalOptions="Fill" Grid.Column="4">
-                            <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                            </Border>
                             <BoxView HeightRequest="2" Color="Gray"/>
-                            <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                            </Border>
                         </VerticalStackLayout>
                         <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="4" Grid.Row="1" Spacing="5">
                             <Label Text="Отрицательная?" VerticalOptions="Center"/>
@@ -71,9 +100,19 @@
                                FontSize="36"
                                Grid.Column="6"/>
                         <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" Grid.Column="7">
-                            <Entry x:Name="resultNominatorEntry" IsReadOnly="True"/>
+                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="resultNominatorEntry" IsReadOnly="True"/>
+                            </Border>
                             <BoxView HeightRequest="2" Color="Gray"/>
-                            <Entry x:Name="resultDenominatorEntry" IsReadOnly="True"/>
+                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="resultDenominatorEntry" IsReadOnly="True"/>
+                            </Border>
                         </VerticalStackLayout>
                     </Grid>
                     
