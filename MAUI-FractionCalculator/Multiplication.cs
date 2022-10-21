@@ -14,7 +14,22 @@ namespace MAUI_FractionCalculator
         }
         public override Fraction Operate(Fraction a, Fraction b)
         {
-            return new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+            int aNum = a.Numerator;
+            int bNum = b.Numerator;
+
+            if (a.IsNegative == false)
+            {
+                aNum = -a.Numerator;
+            }
+            if (b.IsNegative == false)
+            {
+                bNum = -b.Numerator;
+            }
+
+            bool isNegative = (aNum * bNum) < 0;
+
+            return new Fraction(a.Numerator * b.Numerator, b.Denominator * a.Denominator)
+                       { IsNegative = isNegative };
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI_FractionCalculator.MainPage">
-
+             x:Class="MAUI_FractionCalculator.MainPage"
+             xmlns:local="clr-namespace:MAUI_FractionCalculator">
+    <ContentPage.Resources>
+        <local:IsNegativeBoolToSymbolConverter x:Key="boolToSymbol"/>
+    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout
             Spacing="10"
@@ -11,33 +14,77 @@
             VerticalOptions="Center">
             <Label Text="Калькулятор дробей" TextColor="Gray" FontSize="24"/>
             <Frame CornerRadius="10" BorderColor="Gray">
-                <Grid Margin="2" ColumnDefinitions="*, Auto, *, Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="20" RowSpacing="20" VerticalOptions="Start">
-                    <VerticalStackLayout x:Name="fractionA" Spacing="10" HorizontalOptions="Fill" Grid.Column="0">
-                        <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
-                        <BoxView HeightRequest="2" Color="Gray"/>
-                        <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
-                    </VerticalStackLayout>
-                    <Picker x:Name="operatorPicker" 
-                            VerticalOptions="Center" 
-                            ItemsSource="{Binding Operations}" 
-                            SelectedItem="{Binding Operation, Mode=TwoWay}" 
-                            ItemDisplayBinding="{Binding Symbol}" 
-                            SelectedIndex="0" 
-                            Grid.Column="1"/>
-                    <VerticalStackLayout x:Name="fractionB" Spacing="10" HorizontalOptions="Fill" Grid.Column="2">
-                        <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
-                        <BoxView HeightRequest="2" Color="Gray"/>
-                        <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
-                    </VerticalStackLayout>
-                    <Image VerticalOptions="Center" Source="{FontImage '=', Color=Black}" Grid.Column="3"/>
-                    <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" Grid.Column="4">
-                        <Entry x:Name="resultNominatorEntry" IsReadOnly="True"/>
-                        <BoxView HeightRequest="2" Color="Gray"/>
-                        <Entry x:Name="resultDenominatorEntry" IsReadOnly="True"/>
-                    </VerticalStackLayout>
-                    <Button Text="Вычислить" Clicked="CalculateButtonClicked" Grid.Row="1" Grid.ColumnSpan="5" HorizontalOptions="Center"/>
-                </Grid>
-            </Frame> 
+                <VerticalStackLayout Margin="2" Spacing="20">
+                    <Grid ColumnDefinitions="Auto, *, Auto, Auto, *, Auto, Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="20">
+                        
+                        <Label x:Name="fractionANegativeLabel" 
+                               Text="{Binding IsPositive, Converter={StaticResource boolToSymbol}}" 
+                               VerticalOptions="Center"
+                               FontSize="36"
+                               Grid.Column="0"/>
+                        <VerticalStackLayout x:Name="fractionA" Spacing="10" HorizontalOptions="Fill" Grid.Column="1">
+                            <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                            <BoxView HeightRequest="2" Color="Gray"/>
+                            <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                        </VerticalStackLayout>
+                        <CheckBox x:Name="fractionANegativeCB"
+                                  IsChecked="{Binding IsNegative, Mode=TwoWay}" 
+                                  CheckedChanged="FractionANegativeCheckboxCheckedChanged"
+                                  Grid.Column="1"
+                                  Grid.Row="1"
+                                  HorizontalOptions="Center"/>
+                        
+                        <Picker x:Name="operatorPicker"
+                                VerticalOptions="Center" 
+                                ItemsSource="{Binding Operations}" 
+                                SelectedItem="{Binding Operation, Mode=TwoWay}" 
+                                ItemDisplayBinding="{Binding Symbol}" 
+                                SelectedIndex="0" 
+                                Grid.Column="2"/>
+                        
+                        <Label x:Name="fractionBNegativeLabel" 
+                               Text="{Binding IsPositive, Converter={StaticResource boolToSymbol}}" 
+                               VerticalOptions="Center"
+                               FontSize="36"
+                               Grid.Column="3"/>
+                        <VerticalStackLayout x:Name="fractionB" Spacing="10" HorizontalOptions="Fill" Grid.Column="4">
+                            <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                            <BoxView HeightRequest="2" Color="Gray"/>
+                            <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                        </VerticalStackLayout>
+                        <CheckBox x:Name="fractionBNegativeCB"
+                                  IsChecked="{Binding IsNegative, Mode=TwoWay}" 
+                                  CheckedChanged="fractionBNegativeCB_CheckedChanged"
+                                  Grid.Column="4"
+                                  Grid.Row="1"
+                                  HorizontalOptions="Center"/>
+                        
+                        <Label VerticalOptions="Center" Text="=" Grid.Column="5" FontSize="36"/>
+
+                        <Label x:Name="resultNegativeLabel" 
+                               Text="{Binding IsPositive, Converter={StaticResource boolToSymbol}}" 
+                               VerticalOptions="Center"
+                               FontSize="36"
+                               Grid.Column="6"/>
+                        <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" Grid.Column="7">
+                            <Entry x:Name="resultNominatorEntry" IsReadOnly="True"/>
+                            <BoxView HeightRequest="2" Color="Gray"/>
+                            <Entry x:Name="resultDenominatorEntry" IsReadOnly="True"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                    
+                    <Grid ColumnDefinitions="*, *, *, *, *" ColumnSpacing="20">
+                        <Button Text="Вычислить" Clicked="CalculateButtonClicked" Grid.Column="2" HorizontalOptions="Center"/>
+                        <HorizontalStackLayout Grid.Column="3" Spacing="5" HorizontalOptions="Center">
+                            <Label Text="Упрощать результат:" VerticalOptions="Center"/>
+                            <CheckBox x:Name="simplifyCB" 
+                                      IsChecked="{Binding IsSimplifyResult, Mode=TwoWay}" 
+                                      CheckedChanged="SimplifyResultCheckBoxCheckedChanged"
+                                      VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 
