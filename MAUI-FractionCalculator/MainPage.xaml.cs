@@ -3,7 +3,9 @@
 public partial class MainPage : ContentPage
 {
 	public Model Model = new Model();
-	public bool IsSimplifyResult { get; set; } = true;
+	public bool IsToSimplifyResult { get; set; } = true;
+	public bool IsResultAsImproperFraction { get; set; } = false;
+
 	public MainPage()
 	{
         Model.Operation = Model.Operations[0];
@@ -19,21 +21,26 @@ public partial class MainPage : ContentPage
         fractionBNegativeCB.BindingContext = Model.FractionB;
 
         simplifyCB.BindingContext = this;
+        resultMixedCB.BindingContext = this;
     }
 
 	private void CalculateButtonClicked(object sender, EventArgs e)
 	{
-		Fraction result = Model.Operation.Operate(Model.FractionA, Model.FractionB);
-		if (IsSimplifyResult)
-			result = FractionSimplifier.Simplify(result);
-		resultNominatorEntry.Text = Math.Abs(result.Numerator).ToString();
-		resultDenominatorEntry.Text = Math.Abs(result.Denominator).ToString();
-		resultNegativeLabel.Text = result.IsNegative ? "-" : "+";
+        MixedFraction result = new MixedFraction(Model.Operation.Operate(Model.FractionA, Model.FractionB));
+
+		if (IsToSimplifyResult)
+		{
+            result = FractionSimplifier.SimplifyMixed(result);
+        }
+		
+		if (IsResultAsImproperFraction)
+		{
+			result = new MixedFraction(0, result.Numerator, result.Denominator);
+		}
+
+        fractionResult.BindingContext = result;
+        resultNegativeLabel.BindingContext = result;
     }
-	private void SimplifyResultCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		IsSimplifyResult = simplifyCB.IsChecked;
-	}
 
 	private void FractionANegativeCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
 	{

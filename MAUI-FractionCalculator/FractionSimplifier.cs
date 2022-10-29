@@ -10,12 +10,19 @@ namespace MAUI_FractionCalculator
     {
         public static Fraction Simplify(Fraction fraction)
         {
-            int gcd = GreatestCommonDivider(Math.Abs(fraction.Numerator), Math.Abs(fraction.Denominator));
+            int gcd = GreatestCommonDivider(fraction.Numerator, fraction.Denominator);
             int simplifiedNumerator = fraction.Numerator / gcd;
             int simplifiedDenominator = fraction.Denominator / gcd;
             return new Fraction(simplifiedNumerator, simplifiedDenominator) { IsNegative = fraction.IsNegative };
         }
-        public static int GreatestCommonDivider(int a, int b)
+        public static MixedFraction SimplifyMixed(MixedFraction mixedFraction)
+        {
+            int gcd = GreatestCommonDivider(mixedFraction.NumeratorRemainder, mixedFraction.Denominator);
+            int simplifiedNumeratorRemainder = mixedFraction.NumeratorRemainder / gcd;
+            int simplifiedDenominator = mixedFraction.Denominator / gcd;
+            return new MixedFraction(mixedFraction.Whole, simplifiedNumeratorRemainder, simplifiedDenominator) { IsNegative = mixedFraction.IsNegative };
+        }
+        private static int GreatestCommonDivider(int a, int b)
         {
             int n = a % b;
 

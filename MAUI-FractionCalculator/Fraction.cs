@@ -9,12 +9,11 @@ namespace MAUI_FractionCalculator
     public class Fraction
     {
         public bool IsNegative { get; set; } = false;
-        public int Whole { get { return (Numerator - Numerator % Denominator) / Denominator; } }
-        public int Numerator { get; set; }
+        public virtual int Numerator { get; set; }
         public int Denominator { get; set; }
-        public Fraction(int nominator, int denominator)
+        public Fraction(int numerator, int denominator)
         {
-            Numerator = nominator;
+            Numerator = numerator;
             Denominator = denominator;
         }   
     }

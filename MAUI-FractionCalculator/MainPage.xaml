@@ -2,10 +2,22 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI_FractionCalculator.MainPage"
-             xmlns:local="clr-namespace:MAUI_FractionCalculator">
+             xmlns:local="clr-namespace:MAUI_FractionCalculator"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     <ContentPage.Resources>
         <local:IsNegativeBoolToSymbolConverter x:Key="boolToSymbol"/>
+        <Style TargetType="Border" x:Key="inputBorder">
+            <Setter Property="BackgroundColor" Value="{StaticResource Gray100}"/>
+            <Setter Property="Stroke" Value="Gray"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
+            <Setter Property="StrokeThickness" Value="2"/>
+        </Style>
+        <Style TargetType="Label" x:Key="negativeLabel">
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+        </Style>
     </ContentPage.Resources>
+    
     <ScrollView>
         <VerticalStackLayout
             Spacing="10"
@@ -17,35 +29,27 @@
                 <VerticalStackLayout Margin="2" Spacing="20">
                     <Grid ColumnDefinitions="Auto, *, Auto, Auto, *, Auto, Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="10" Padding="20">
 
+                        <!--Fraction A-->
                         <Label x:Name="fractionANegativeLabel" 
+                               Style="{StaticResource negativeLabel}"
                                Text="{Binding IsNegative, Converter={StaticResource boolToSymbol}}" 
-                               VerticalOptions="Center"
-                               FontSize="36"
                                Grid.Column="0"/>
                         <Grid ColumnDefinitions="1*, 2*" ColumnSpacing="20" x:Name="fractionA" Grid.Column="1" >
-                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2" VerticalOptions="Center">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
-                                </Border.StrokeShape>
+                            <Border Style="{StaticResource inputBorder}" VerticalOptions="Center">
                                 <Entry Text="{Binding Whole, Mode=TwoWay}" VerticalOptions="Center" Grid.Column="0"/>
                             </Border>
                             <VerticalStackLayout Spacing="10" Grid.Column="1" HorizontalOptions="Fill">
-                                <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10"/>
-                                    </Border.StrokeShape>
-                                    <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                                <Border Style="{StaticResource inputBorder}">
+                                    <Entry Text="{Binding NumeratorRemainder, Mode=TwoWay}"/>
                                 </Border>
                                 <BoxView HeightRequest="2" Color="Gray"/>
-                                <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10"/>
-                                    </Border.StrokeShape>
+                                <Border Style="{StaticResource inputBorder}">
                                     <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
-
+                        
+                        <!--Fraction A IsNegative setter-->
                         <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="1" Grid.Row="1" Spacing="5">
                             <Label Text="Отрицательная?" VerticalOptions="Center"/>
                             <CheckBox x:Name="fractionANegativeCB"
@@ -54,7 +58,8 @@
                                   Grid.Column="1"
                                   Grid.Row="1"/>
                         </HorizontalStackLayout>
-
+                        
+                        <!--Operator picker-->
                         <Picker x:Name="operatorPicker"
                                 VerticalOptions="Center" 
                                 ItemsSource="{Binding Operations}" 
@@ -62,27 +67,28 @@
                                 ItemDisplayBinding="{Binding Symbol}" 
                                 SelectedIndex="0" 
                                 Grid.Column="2"/>
-                        
-                        <Label x:Name="fractionBNegativeLabel" 
+
+                        <!--Fraction B-->
+                        <Label x:Name="fractionBNegativeLabel"
+                               Style="{StaticResource negativeLabel}"
                                Text="{Binding IsNegative, Converter={StaticResource boolToSymbol}}" 
-                               VerticalOptions="Center"
-                               FontSize="36"
                                Grid.Column="3"/>
-                        <VerticalStackLayout x:Name="fractionB" Spacing="10" HorizontalOptions="Fill" Grid.Column="4">
-                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
-                                </Border.StrokeShape>
-                                <Entry Text="{Binding Numerator, Mode=TwoWay}"/>
+                        <Grid x:Name="fractionB"  ColumnDefinitions="1*, 2*" ColumnSpacing="20" Grid.Column="4" >
+                            <Border Style="{StaticResource inputBorder}" VerticalOptions="Center">
+                                <Entry Text="{Binding Whole, Mode=TwoWay}" VerticalOptions="Center" Grid.Column="0"/>
                             </Border>
-                            <BoxView HeightRequest="2" Color="Gray"/>
-                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
-                                </Border.StrokeShape>
-                                <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
-                            </Border>
-                        </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" Grid.Column="1">
+                                <Border Style="{StaticResource inputBorder}">
+                                    <Entry Text="{Binding NumeratorRemainder, Mode=TwoWay}"/>
+                                </Border>
+                                <BoxView HeightRequest="2" Color="Gray"/>
+                                <Border Style="{StaticResource inputBorder}">
+                                    <Entry Text="{Binding Denominator, Mode=TwoWay}"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                        
+                        <!--Fraction B IsNegative setter-->
                         <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="4" Grid.Row="1" Spacing="5">
                             <Label Text="Отрицательная?" VerticalOptions="Center"/>
                             <CheckBox x:Name="fractionBNegativeCB"
@@ -92,37 +98,41 @@
                                   Grid.Row="1"/>
                         </HorizontalStackLayout>
                         
+                        <!--Result view-->
                         <Label VerticalOptions="Center" Text="=" Grid.Column="5" FontSize="36"/>
 
                         <Label x:Name="resultNegativeLabel" 
+                               Style="{StaticResource negativeLabel}"
                                Text="{Binding IsNegative, Converter={StaticResource boolToSymbol}}" 
-                               VerticalOptions="Center"
-                               FontSize="36"
                                Grid.Column="6"/>
-                        <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" Grid.Column="7">
-                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
-                                </Border.StrokeShape>
-                                <Entry x:Name="resultNominatorEntry" IsReadOnly="True"/>
+
+                        <Grid x:Name="fractionResult"  ColumnDefinitions="1*, 2*" ColumnSpacing="20" Grid.Column="7">
+                            <Border Style="{StaticResource inputBorder}" VerticalOptions="Center">
+                                <Entry Text="{Binding Whole}" VerticalOptions="Center" Grid.Column="0" IsReadOnly="True"/>
                             </Border>
-                            <BoxView HeightRequest="2" Color="Gray"/>
-                            <Border Stroke="Gray" BackgroundColor="{StaticResource Gray100}" StrokeThickness="2">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
-                                </Border.StrokeShape>
-                                <Entry x:Name="resultDenominatorEntry" IsReadOnly="True"/>
-                            </Border>
-                        </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" Grid.Column="1">
+                                <Border Style="{StaticResource inputBorder}">
+                                    <Entry Text="{Binding NumeratorRemainder}" IsReadOnly="True"/>
+                                </Border>
+                                <BoxView HeightRequest="2" Color="Gray"/>
+                                <Border Style="{StaticResource inputBorder}">
+                                    <Entry Text="{Binding Denominator}" IsReadOnly="True"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
                     </Grid>
                     
+                    <!--Options-->
                     <Grid ColumnDefinitions="*, *, *, *, *" ColumnSpacing="20">
                         <Button Text="Вычислить" Clicked="CalculateButtonClicked" Grid.Column="2" HorizontalOptions="Center"/>
                         <HorizontalStackLayout Grid.Column="3" Spacing="5" HorizontalOptions="Center">
                             <Label Text="Упрощать результат:" VerticalOptions="Center"/>
                             <CheckBox x:Name="simplifyCB" 
-                                      IsChecked="{Binding IsSimplifyResult, Mode=TwoWay}" 
-                                      CheckedChanged="SimplifyResultCheckBoxCheckedChanged"
+                                      IsChecked="{Binding IsToSimplifyResult, Mode=TwoWay}" 
+                                      VerticalOptions="Center"/>
+                            <Label Text="Результат как неправильная дробь:" VerticalOptions="Center"/>
+                            <CheckBox x:Name="resultMixedCB" 
+                                      IsChecked="{Binding IsResultAsImproperFraction, Mode=TwoWay}" 
                                       VerticalOptions="Center"/>
                         </HorizontalStackLayout>
                     </Grid>
